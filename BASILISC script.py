@@ -9,16 +9,22 @@ import subprocess
 mask_all = mimics.segment.create_mask()
 mask_all.name = "ALL"
 
-#setting threshold based on developmental stage
+#setting threshold based on developmental stage, scanning conditions, etc.
 mask_all = mimics.data.masks[0]
-threshold = mimics.dialogs.question_box(message = "Select developmental stage of sample", title = "Threshold", buttons = "E17.5;P7")
-if threshold == "E17.5":
+threshold = mimics.dialogs.question_box(message = "Select pre-defined threshold", title = "Threshold", buttons = "Low;Medium;High")
+if threshold == "Low":
     low_hu = 195
     high_hu = 2000
     l_t = mimics.segment.HU2GV(low_hu)
     h_t = mimics.segment.HU2GV(high_hu)
     mimics.segment.threshold(mask=mask_all,threshold_min=l_t,threshold_max=h_t)
-elif threshold == "P7":
+elif threshold == "Medium":
+    low_hu = 300
+    high_hu = 3500
+    l_t = mimics.segment.HU2GV(low_hu)
+    h_t = mimics.segment.HU2GV(high_hu)
+    mimics.segment.threshold(mask=mask_all,threshold_min=l_t,threshold_max=h_t)
+else:
     low_hu = 398
     high_hu = 5000
     l_t = mimics.segment.HU2GV(low_hu)
